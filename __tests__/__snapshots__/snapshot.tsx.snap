@@ -3,7 +3,7 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <div
-    class="containe"
+    class="container"
   >
     <main>
       <h1
