@@ -11,12 +11,12 @@ datasource db {
 }
 
 model User{
-  id String @default(cuid()) @id
-  name String
-  email String @unique
-  passwort String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  admin Boolean @default(false)
-  pending Boolean @default(true)
+  id String @default(cuid()) @id //Zufällig erstellte Id
+  name String                    //Name des Users
+  email String @unique           //Email des Users
+  passwort String                //Passwort des Users
+  createdAt DateTime @default(now()) //Erstellungsdatum
+  updatedAt DateTime @updatedAt //Aktualisierungsdatum
+  admin Boolean @default(false) //Ob der Benutzer ein Admin ist (default: nein)
+  pending Boolean @default(true) //Emailverifizierung (defautl: noch nicht verifiziert)
 }
