@@ -23,7 +23,7 @@ export default function SignIn() {
   return (
     <>
       <Head>
-        <title>ETD - Sign In</title>
+        <title>ETD - Log In</title>
         <meta name="description" content="Sign in to ETD" />
       </Head>
       <Container component="main" maxWidth="xs">
@@ -60,8 +60,8 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography component="h1" variant="h4">
+            Log In
           </Typography>
           <Formik
             initialValues={{ email: "", password: "" }}
@@ -140,7 +140,7 @@ export default function SignIn() {
                   sx={{ mt: 3, mb: 2 }}
                   disabled={isSubmitting}
                 >
-                  Sign In
+                  Click here to Log In
                 </Button>
                 <Grid container justifyContent="space-between">
                   <Grid item>
