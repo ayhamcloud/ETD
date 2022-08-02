@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import cookie from "cookie";
@@ -12,13 +12,11 @@ export default async function login(req, res) {
     return;
   }
   const LowerCaseEmail = req.body.email.toLowerCase();
-  const user = /** @type {User} */ (
-    await prisma.user.findUnique({
-      where: {
-        email: LowerCaseEmail,
-      },
-    })
-  );
+  const user = (await prisma.user.findUnique({
+    where: {
+      email: LowerCaseEmail,
+    },
+  })) as User;
   if (!user) {
     res.status(400).json({ error: "Email or password is incorrect" });
     await prisma.$disconnect();
@@ -33,7 +31,7 @@ export default async function login(req, res) {
     return;
   }
 
-  compare(req.body.password, user.password, async (err, result) => {
+  compare(req.body.password, user.passwort, async (err, result) => {
     if (!result) {
       res.status(400).json({ error: "Email or password is incorrect" });
       await prisma.$disconnect();
