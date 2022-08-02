@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id String @default(cuid()) @id //Zufällig erstellte Id
+  name String                    //Name des Users
+  email String @unique           //Email des Users
+  passwort String                //Passwort des Users
+  createdAt DateTime @default(now()) //Erstellungsdatum
+  updatedAt DateTime @updatedAt @default(now())//Aktualisierungsdatum
+  session Session[] //relationship to Session
+  admin Boolean @default(false) //Ob der Benutzer ein Admin ist (default: nein)
+  pending Boolean @default(true) //Emailverifizierung (defautl: noch nicht verifiziert)
+}
+
+model Session{
+  id String @default(cuid()) @id //Zufällig erstellte Id
+  name String //Name der Session
+  date DateTime  //Erstellungsdatum der Session
+  exercise Exercise[]   //relationship to Exercise
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade) //User der Session
+  userId String 
+}
+
+model Exercise{
+  id String @default(cuid()) @id 
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  sets Set[]
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade) //Session der Session
+  sessionId String
+}
+
+model Set{
+  id String @default(cuid()) @id 
+  reps Int
+  weigth Float
+  unit String @default("kg")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  exerciseId String
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade) //Exercise der Set
+}
