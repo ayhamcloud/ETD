@@ -1,65 +1,60 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Layout from "../components/Layout";
+import Grid from "@mui/material/Grid";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import MainFeaturedPost from "../components/index/MainFeaturedPost";
+import Sidebar from "../components/index/Sidebar";
+import Main from "../components/index/Main";
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
-import styles from '@/pages/index.module.css'
+const mainFeaturedPost = {
+  title: "Welcome to ETD",
+  description: `ETD - Easy Trainings Documentation is the best place to document
+    your workouts and visualize your progress in each exercise.`,
+  imageText: "main image description",
+};
 
-export default function Home() {
+const sidebar = {
+  title: "About",
+  description:
+    "ETD was created with simplicity in mind. It is a simple way to document your workouts and visualize your progress to help you improve your performance.",
+  social: [
+    { name: "GitHub", icon: GitHubIcon, url: "https://github.com/ayham291" },
+  ],
+};
+
+export default function Home(props) {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout title="ETD - Home">
+      <MainFeaturedPost post={mainFeaturedPost} />
+      <Grid container spacing={2} sx={{ mt: 3 }}>
+        <Main title="What is new in ETD" posts={props.posts} />
+        <Sidebar
+          title={sidebar.title}
+          description={sidebar.description}
+          social={sidebar.social}
+        />
+      </Grid>
+    </Layout>
+  );
+}
 
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+export async function getStaticProps() {
+  const files = fs.readdirSync(path.join("_posts"));
+  const posts = files.map((post) => {
+    const slug = post.replace(".md", "");
+    const metaMd = fs.readFileSync(path.join("_posts", post), "utf8");
+    const { data } = matter(metaMd);
+    return {
+      slug,
+      data,
+    };
+  });
 
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a href="https://vercel.com/new" className={styles.card}>
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
-  )
+  return {
+    props: {
+      posts,
+    },
+  };
 }
