@@ -55,7 +55,7 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h4">
             Sign up
           </Typography>
           <Formik
@@ -163,13 +163,13 @@ export default function SignUp() {
                   sx={{ mt: 3, mb: 2 }}
                   disabled={isSubmitting}
                 >
-                  Sign Up
+                  Click Here To Sign Up
                 </Button>
                 <Grid container justifyContent="flex-end">
                   <Grid item>
                     <NextLink href="/login" passHref>
                       <Link variant="body2">
-                        Already have an account? Sign in
+                        Already have an account? Log In
                       </Link>
                     </NextLink>
                   </Grid>
