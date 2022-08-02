@@ -17,7 +17,7 @@ model User{
   passwort String                //Passwort des Users
   createdAt DateTime @default(now()) //Erstellungsdatum
   updatedAt DateTime @updatedAt @default(now())//Aktualisierungsdatum
-  session Session[] //relationship to Session
+  sessions Session[] //relationship to Session
   admin Boolean @default(false) //Ob der Benutzer ein Admin ist (default: nein)
   pending Boolean @default(true) //Emailverifizierung (defautl: noch nicht verifiziert)
 }
@@ -26,7 +26,7 @@ model Session{
   id String @default(cuid()) @id //Zufällig erstellte Id
   name String //Name der Session
   date DateTime  //Erstellungsdatum der Session
-  exercise Exercise[]   //relationship to Exercise
+  exercises Exercise[]   //relationship to Exercise
   user User @relation(fields: [userId], references: [id], onDelete: Cascade) //User der Session
   userId String 
 }
