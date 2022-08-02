@@ -39,7 +39,7 @@ exports[`renders login page unchanged 1`] = `
       class="MuiBox-root css-1kjaip3"
     >
       <h1
-        class="MuiTypography-root MuiTypography-h5 css-ag7rrr-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
       >
         Sign up
       </h1>
@@ -218,7 +218,7 @@ exports[`renders login page unchanged 1`] = `
           tabindex="0"
           type="submit"
         >
-          Sign Up
+          Click Here To Sign Up
           <span
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
@@ -233,7 +233,7 @@ exports[`renders login page unchanged 1`] = `
               class="MuiTypography-root MuiTypography-body2 MuiLink-root MuiLink-underlineAlways css-101ca9i-MuiTypography-root-MuiLink-root"
               href="/login"
             >
-              Already have an account? Sign in
+              Already have an account? Log In
             </a>
           </div>
         </div>
