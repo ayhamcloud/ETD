@@ -7,16 +7,19 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Copyright from "../src/Copyright";
-import { useContext } from "react";
-import { Store } from "../utils/Store";
-import { Formik, Field, ErrorMessage, FormikErrors } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
 import { object, string } from "yup";
 import { Alert } from "@mui/material";
 import Head from "next/head";
 
-export default function SignIn({title, metaDescription, forgotPassword, noAccountYet,next,router}) {
-  const { state, dispatch } = useContext(Store);
-
+export default function SignIn({
+  title,
+  metaDescription,
+  forgotPassword,
+  noAccountYet,
+  next,
+  router,
+}) {
   return (
     <>
       <Head>
@@ -80,15 +83,12 @@ export default function SignIn({title, metaDescription, forgotPassword, noAccoun
               console.log(data);
               // redirect to dashboard page
               if (data.loggedIn) {
-                dispatch({ type: "USER_LOGIN", payload: data.name });
-                if(router != null){
-                  router.push(next || "/");
-                }
+                router.push(next || "/");
               }
               formikHelpers.setErrors({ Server: data.error } as any);
             }}
           >
-            {({ values, errors, isSubmitting, handleSubmit, handleReset }) => (
+            {({ errors, isSubmitting, handleSubmit, handleReset }) => (
               <Box
                 component="form"
                 onSubmit={handleSubmit}
@@ -144,16 +144,12 @@ export default function SignIn({title, metaDescription, forgotPassword, noAccoun
                 <Grid container justifyContent="space-between">
                   <Grid item>
                     <NextLink href="/reset-password" passHref>
-                      <Link variant="body2">
-                        {forgotPassword}
-                      </Link>
+                      <Link variant="body2">{forgotPassword}</Link>
                     </NextLink>
                   </Grid>
                   <Grid item>
                     <NextLink href="/signup" passHref>
-                      <Link variant="body2">
-                        {noAccountYet}
-                      </Link>
+                      <Link variant="body2">{noAccountYet}</Link>
                     </NextLink>
                   </Grid>
                 </Grid>

@@ -88,7 +88,7 @@ export default function SignUp() {
               const data = await res.json();
               console.log(data);
               if (res.status !== 200) {
-                formikHelpers.setErrors({ Server: data.message }as any);
+                formikHelpers.setErrors({ Server: data.message } as any);
               }
               // redirect to home page
               if (res.status === 200) {
