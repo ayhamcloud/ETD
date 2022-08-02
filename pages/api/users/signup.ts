@@ -1,5 +1,6 @@
 import { PrismaClient, User } from "@prisma/client";
 import { hash } from "bcrypt";
+import { createTransport } from "nodemailer";
 import { sign } from "jsonwebtoken";
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -42,13 +43,13 @@ export default async function signup(
       return;
     }
 
-    const user = await prisma.user.create({
+    const user = (await prisma.user.create({
       data: {
         email: LowerCaseEmail,
         passwort: hash,
         name: data.name,
       },
-    }) as User;
+    })) as User;
 
     await prisma.$disconnect();
     const token = sign(
@@ -68,5 +69,41 @@ export default async function signup(
         path: "/",
       })
     );
+    send_email(token, user, req);
+    res.status(200).json({
+      user: { name: user.name, email: user.email, createdAt: user.createdAt },
+      created: true,
+    });
+  });
+}
+
+async function send_email(token: string, user: User, req: NextApiRequest) {
+  const transporter = createTransport({
+    host: process.env.MAIL_URL,
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
+      type: "login",
+    },
+  });
+
+  const mailOptions = {
+    from: "ETD - Easy Trainings Documentation <etd@ayhamcloud.de>",
+    to: user.email,
+    subject: "Verify your email ⏰",
+    html: `Hello ${user.name},<br><br>Please verify your email by clicking on the link: <br><a href="http://${req.headers.host}/verification/check-email?token=${token}">Verfication Link</a><br><br>`,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      console.log("Email not sent");
+      return;
+    } else {
+      console.log("Email sent: " + info.response);
+      return;
+    }
   });
 }
