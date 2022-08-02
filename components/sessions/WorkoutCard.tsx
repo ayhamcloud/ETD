@@ -17,10 +17,10 @@ import DeleteDialog from "../dialogs/DeleteDialog";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import InfoIcon from "@mui/icons-material/Info";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
+const ExpandMore = (styled((props) => {
+  const { expand, ...other } = props as any;
   return <IconButton {...other} />;
-})(({ theme, expand }) => ({
+}) as any)(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
   marginLeft: "auto",
   transition: theme.transitions.create("transform", {
@@ -56,7 +56,7 @@ function WorkoutCard({ session, defaultExpand, modifiable, overview = false }) {
     <Card
       sx={{
         width: "100%",
-        backgroundColor: theme.palette.card.main,
+        backgroundColor: (theme.palette as any).card.main,
         borderRadius: 5,
       }}
     >
@@ -82,7 +82,7 @@ function WorkoutCard({ session, defaultExpand, modifiable, overview = false }) {
                   <time dateTime={session.date}>
                     {format(parseISO(session.date), "LLLL d, yyyy - kk:mm", {
                       timeZone: "Europe/Berlin",
-                    })}
+                    } as any)}
                   </time>
                   {session.exercises.length > 0 && (
                     <>
@@ -102,7 +102,7 @@ function WorkoutCard({ session, defaultExpand, modifiable, overview = false }) {
                           "LLLL d, yyyy - kk:mm",
                           {
                             timeZone: "Europe/Berlin",
-                          }
+                          } as any
                         )}
                       </time>
                     </>
@@ -128,7 +128,7 @@ function WorkoutCard({ session, defaultExpand, modifiable, overview = false }) {
               <time dateTime={session.date}>
                 {format(parseISO(session.date), "LLLL d, yyyy - kk:mm", {
                   timeZone: "Europe/Berlin",
-                })}
+                } as any)}
               </time>
               {session.exercises.length > 0 && (
                 <>
@@ -147,7 +147,7 @@ function WorkoutCard({ session, defaultExpand, modifiable, overview = false }) {
                       "LLLL d, yyyy - kk:mm",
                       {
                         timeZone: "Europe/Berlin",
-                      }
+                      } as any
                     )}
                   </time>
                 </>

@@ -80,30 +80,30 @@ function SearchForm(props) {
                 type="text"
                 fullWidth
               />
-              {results.error && <Alert severity="error">{results.error}</Alert>}
+              {(results as any).error && <Alert severity="error">{(results as any).error}</Alert>}
               <Box sx={{ mt: 2 }}>
-                {results.sessions && (
+                {(results as any).sessions && (
                   <>
                     <Typography variant="h6" component="h3">
                       Sessions
                     </Typography>
                     <List>
-                      {results.sessions.map((session) => (
+                      {(results as any).sessions.map((session) => (
                         <ListItem key={session.id}>
-                          <WorkoutCard session={session} />
+                          <WorkoutCard session={session} modifiable={null} overview={true} defaultExpand={true}/>
                         </ListItem>
                       ))}
                     </List>
                   </>
                 )}
 
-                {results.exercises && (
+                {(results as any).exercises && (
                   <>
                     <Typography variant="h6" component="h3">
                       Exercises
                     </Typography>
                     <List>
-                      {results.exercises.map((exercise) => (
+                      {(results as any).exercises.map((exercise) => (
                         <ListItem key={exercise.id}>
                           <span>{exercise.name}</span>
                           <table style={{ textAlign: "center", width: "100%" }}>
@@ -199,7 +199,7 @@ function Header(props) {
         },
       });
       if (res.status === 200) {
-        window.location = "/";
+        (window as any).location = "/";
       }
     }
     if (value === "reset-password") {

@@ -15,20 +15,9 @@ const theme = createTheme({
     },
     text: {
       primary: "#3e3e3e",
-      secondary: "#1a1a1a",
-      onImage: "#f0f0f0",
-    },
-    card: {
-      main: "#fbfbfb",
-    },
-  },
-  hr: {
-    border: "0",
-    height: "1px",
-    background: "#333",
-    backgroundImage: "linear-gradient(to right, #ccc, #333, #ccc)",
-    width: "100%",
-  },
+      secondary: "#1a1a1a"
+    }
+  }
 });
 
 export default theme;

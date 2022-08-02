@@ -3,7 +3,7 @@ import { createContext, useReducer } from "react";
 
 const userName = Cookies.get("uname");
 
-export const Store = createContext<any>({});
+export const Store = createContext({state: {userInfo: null}}) as any;
 const initialState = {
   userInfo: userName ? userName : null,
 };

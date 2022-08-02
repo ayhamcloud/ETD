@@ -26,7 +26,7 @@ const sidebar = {
 
 export default function Home(props) {
   return (
-    <Layout title="ETD - Home">
+    <Layout title="ETD - Home" sections={null}>
       <MainFeaturedPost post={mainFeaturedPost} />
       <Grid container spacing={2} sx={{ mt: 3 }}>
         <Main title="What is new in ETD" posts={props.posts} />

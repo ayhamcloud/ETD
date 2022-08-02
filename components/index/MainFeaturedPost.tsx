@@ -5,7 +5,6 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import theme from '../../src/theme';
-import Image from 'next/image';
 
 function MainFeaturedPost(props) {
   const { post } = props;
