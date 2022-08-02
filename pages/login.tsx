@@ -10,7 +10,7 @@ import Copyright from "../src/Copyright";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { Store } from "../utils/Store";
-import { Formik, Field, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage, FormikErrors } from "formik";
 import { object, string } from "yup";
 import { Alert } from "@mui/material";
 import Head from "next/head";
@@ -18,7 +18,7 @@ import Head from "next/head";
 export default function SignIn() {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
-  const { next } = router.query;
+  const { next } = router.query as any;
 
   return (
     <>
@@ -86,7 +86,7 @@ export default function SignIn() {
                 dispatch({ type: "USER_LOGIN", payload: data.name });
                 router.push(next || "/");
               }
-              formikHelpers.setErrors({ Server: data.error });
+              formikHelpers.setErrors({ Server: data.error } as any);
             }}
           >
             {({ values, errors, isSubmitting, handleSubmit, handleReset }) => (
@@ -96,8 +96,8 @@ export default function SignIn() {
                 onReset={handleReset}
                 sx={{ mt: 1, width: "100%" }}
               >
-                {errors.Server && (
-                  <Alert severity="error">{errors.Server}</Alert>
+                {(errors as any).Server && (
+                  <Alert severity="error">{(errors as any).Server}</Alert>
                 )}
                 <ErrorMessage name="email">
                   {(msg) => <Alert severity="warning">{msg}</Alert>}
