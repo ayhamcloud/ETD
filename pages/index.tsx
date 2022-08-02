@@ -1,60 +1,40 @@
-import Layout from "../components/Layout";
-import Grid from "@mui/material/Grid";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import MainFeaturedPost from "../components/index/MainFeaturedPost";
-import Sidebar from "../components/index/Sidebar";
-import Main from "../components/index/Main";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import { Box, Typography, Link, Button } from "@mui/material";
+import NextLink from "next/link";
 
-const mainFeaturedPost = {
-  title: "Welcome to ETD",
-  description: `ETD - Easy Trainings Documentation is the best place to document
-    your workouts and visualize your progress in each exercise.`,
-  imageText: "main image description",
-};
-
-const sidebar = {
-  title: "About",
-  description:
-    "ETD was created with simplicity in mind. It is a simple way to document your workouts and visualize your progress to help you improve your performance.",
-  social: [
-    { name: "GitHub", icon: GitHubIcon, url: "https://github.com/ayham291" },
-  ],
-};
-
-export default function Home(props) {
+export default function Home() {
   return (
-    <Layout title="ETD - Home" sections={null}>
-      <MainFeaturedPost post={mainFeaturedPost} />
-      <Grid container spacing={2} sx={{ mt: 3 }}>
-        <Main title="What is new in ETD" posts={props.posts} />
-        <Sidebar
-          title={sidebar.title}
-          description={sidebar.description}
-          social={sidebar.social}
-        />
-      </Grid>
-    </Layout>
+    <Box
+      my={4}
+      sx={{
+        justifyContent: "center",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <NextLink href="/" passHref>
+        <Link
+          sx={{
+            textDecoration: "none",
+          }}
+        >
+          <Typography component="h1" variant="h2" fontWeight={700}>
+            ETD
+          </Typography>
+        </Link>
+      </NextLink>
+      <Typography component="h1" variant="h5">
+        <b>E</b>asy <b>T</b>rainings <b>D</b>ocumentation
+      </Typography>
+      <NextLink href="/signup" passHref>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Sign Up
+        </Button>
+      </NextLink>
+    </Box>
   );
-}
-
-export async function getStaticProps() {
-  const files = fs.readdirSync(path.join("_posts"));
-  const posts = files.map((post) => {
-    const slug = post.replace(".md", "");
-    const metaMd = fs.readFileSync(path.join("_posts", post), "utf8");
-    const { data } = matter(metaMd);
-    return {
-      slug,
-      data,
-    };
-  });
-
-  return {
-    props: {
-      posts,
-    },
-  };
 }
