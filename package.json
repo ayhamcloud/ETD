@@ -10,9 +10,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mui/material": "^5.9.3",
+    "@mui/types": "^7.1.5",
+    "@types/js-cookie": "^3.0.2",
+    "formik": "^2.2.9",
+    "js-cookie": "^3.0.1",
     "next": "12.2.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.4",
