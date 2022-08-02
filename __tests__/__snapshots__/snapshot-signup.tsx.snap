@@ -242,23 +242,7 @@ exports[`renders signup unchanged 1`] = `
     <p
       class="MuiTypography-root MuiTypography-body2 MuiTypography-alignCenter css-v19ssp-MuiTypography-root"
     >
-      Made with 💪 by 
-      <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1cghntr-MuiTypography-root-MuiLink-root"
-        href="https://github.com/ayham291"
-      >
-        Ayham
-      </a>
-       
-      and
-       
-      <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1cghntr-MuiTypography-root-MuiLink-root"
-        href="https://www.instagram.com/raphael_bgr_9900/"
-      >
-        Raphi
-      </a>
-       
+      Made with 💪 by ETD-Team 
       2022
        - 
       ©
