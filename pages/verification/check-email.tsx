@@ -151,10 +151,9 @@ export default function CheckMail({ user }) {
           justifyContent: "center",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
         }}
       >
-        {check}
+        {loading ? verified : check}
       </Box>
       <Copyright />
     </Container>
