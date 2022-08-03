@@ -1,6 +1,8 @@
 import nodeFetch from 'node-fetch';
 import { PrismaClient } from "@prisma/client";
 
+jest.setTimeout(20000)
+
 describe('test signup endpoint ', () => {
   it('short password ', async () => {
     const response = await nodeFetch('http://localhost:3000/api/users/signup', {

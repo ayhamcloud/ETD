@@ -1,5 +1,7 @@
 import nodeFetch from 'node-fetch';
 
+jest.setTimeout(20000)
+
 describe('test login endpoint', () => {
 
   it('unverified user ', async () => {

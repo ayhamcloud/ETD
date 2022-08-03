@@ -9,26 +9,12 @@ it('puppeteer home ', async () => {
   });
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1080 })
-  await page.goto('http://localhost:3000/signup');
+  await page.goto('http://localhost:3000/login');
 
-  const prisma = new PrismaClient();
-  try {
-    await prisma.user.delete({
-      where: {
-        email: "signup1@gmail.com"
-      }
-    })
-  }
-  catch (err) {
-  }
-
-  prisma.$disconnect()
-
-  await page.type('[name="name"]',"signup1");
-  await page.type('[name="email"]',"signup1@gmail.com");
+  await page.type('[name="email"]',"login@gmail.com");
   await page.type('[name="password"]',"#a3456789");
   await page.click('[type="submit"]');
   await page.waitForNavigation();
-  expect(page.url()).toBe('http://localhost:3000/verification/check-email');
+  expect(page.url()).toBe('http://localhost:3000/sessions');
   await browser.close();
 })
