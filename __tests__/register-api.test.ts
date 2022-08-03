@@ -9,9 +9,9 @@ describe('test signup endpoint ', () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: "kahles17",
-        email: "simon.roehrl01@gmail.com",
-        password: "#SC"
+        name: "signup",
+        email: "signup@gmail.com",
+        password: "123"
       })
     });
 
@@ -26,7 +26,7 @@ describe('test signup endpoint ', () => {
     try {
       await prisma.user.delete({
         where: {
-          email: "simon.roehrl01@gmail.com"
+          email: "signup@gmail.com"
         }
       })
     }
@@ -40,14 +40,14 @@ describe('test signup endpoint ', () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: "kahles17",
-        email: "simon.roehrl01@gmail.com",
-        password: "#SCt3PfGSW"
+        name: "signup",
+        email: "signup@gmail.com",
+        password: "#a3456789"
       })
     });
 
     const data = await response.json();
     expect(response.status).toBe(200);
-    expect(data.user.email).toStrictEqual("simon.roehrl01@gmail.com");
+    expect(data.user.email).toStrictEqual("signup@gmail.com");
   });
 });
