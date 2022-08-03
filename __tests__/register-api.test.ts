@@ -34,6 +34,8 @@ describe('test signup endpoint ', () => {
       console.log(err)
     }
 
+    prisma.$disconnect()
+
     const response = await nodeFetch('http://localhost:3000/api/users/signup', {
       method: "POST",
       headers: {
