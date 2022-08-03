@@ -50,7 +50,7 @@ export default function Home() {
           <Button
             type="submit"
             // fullWidth
-            variant="contained"
+            variant="outlined"
             sx={{ mt: 3, mb: 2 }}
             size="large"
           // disabled={isSubmitting}
