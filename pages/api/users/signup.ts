@@ -5,6 +5,13 @@ import { sign } from "jsonwebtoken";
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 
+declare module "jsonwebtoken" {
+  export interface JwtPayload {
+    userId: string;
+    email: string;
+    pending: boolean;
+  }
+}
 const prisma = new PrismaClient();
 
 export default async function signup(

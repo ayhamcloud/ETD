@@ -1,6 +1,6 @@
 import { PrismaClient, User } from "@prisma/client";
 import { createTransport } from "nodemailer";
-import { decode } from "jsonwebtoken";
+import { decode, JwtPayload } from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
@@ -12,12 +12,18 @@ export default async function resendEmail(req, res) {
   }
   const { token } = req.cookies;
   if (!token) {
-    res.status(400).json({ error: "cookie verkackt" });
     await prisma.$disconnect();
+    res.status(400).json({ error: "cookie verkackt" });
     return;
   }
 
-  const uid = decode(token).userId;
+  const decoded = decode(token) as JwtPayload;
+  if (!decoded) {
+    await prisma.$disconnect();
+    res.status(400).json({ error: "cookie verkackt" });
+    return;
+  }
+  const uid = decoded.userId;
   const user = await prisma.user.findUnique({
     where: {
       id: uid,
@@ -52,7 +58,7 @@ async function send_email(token, user, req) {
   });
 
   const mailOptions = {
-    from: "ETD - Easy SEX Documentation <notifs@ayhamcloud.de>",
+    from: "ETD - Easy ETD Documentation <etd@ayhamcloud.de>",
     to: user.email,
     subject: "Verify your email ⏰",
     html: `Hello ${user.name},<br><br>Please verify your email by clicking on the link: <br><a href="http://${req.headers.host}/verification/check-email?token=${token}">Verfication Link</a><br><br>`,

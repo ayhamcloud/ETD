@@ -1,17 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import { authenticated } from "../../../middlewares/auth";
 import { decode } from "jsonwebtoken";
-import { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-export default authenticated(async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default authenticated(async function handle(req, res) {
   const { skip, take } = req.query;
-  let takeInt = parseInt(take) === 0 || parseInt(take) > 50 || !take ? 10 : parseInt(take);
-  let skipInt = parseInt(skip) === 0 || !skip || parseInt(skip) > takeInt ? 0 : parseInt(skip);
+  let takeInt = take === 0 || take > 50 || !take ? 10 : parseInt(take);
+  let skipInt = skip === 0 || !skip || skip > takeInt ? 0 : parseInt(skip);
   const uid = decode(req.cookies.token).userId;
   if (req.method === "GET") {
     const sessionsCount = await prisma.session.count({
