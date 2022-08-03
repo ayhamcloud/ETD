@@ -165,23 +165,23 @@ export const getServerSideProps = async (ctx) => {
   const { token } = ctx.query;
   const prisma = new PrismaClient();
   const cookies_token = ctx.req.cookies.token;
-  // if (!token && !cookies_token) {
-  //   return {
-  //     redirect: {
-  //       destination: "/login",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+  if (!token && !cookies_token) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
   if (cookies_token) {
-    const { pending, userId } = verify(cookies_token, process.env.JWT_SECRET);
+    const { pending, userId } = verify(cookies_token, process.env.JWT_SECRET || "");
     const user_before = await prisma.user.findUnique({
       where: {
         id: userId,
       },
     });
 
-    if (!pending || !user_before.pending) {
+    if (!pending || !user_before?.pending) {
       return {
         redirect: {
           destination: "/login",
@@ -199,7 +199,7 @@ export const getServerSideProps = async (ctx) => {
     };
   }
 
-  const decoded = verify(token, process.env.JWT_SECRET);
+  const decoded = verify(token, process.env.JWT_SECRET || "");
   const uid = decoded.userId;
 
   const user = await prisma.user.findUnique({
@@ -207,7 +207,7 @@ export const getServerSideProps = async (ctx) => {
       id: uid,
     },
   });
-  if (user.pending === false) {
+  if (user?.pending === false) {
     return {
       redirect: {
         destination: "/login",
