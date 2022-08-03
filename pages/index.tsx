@@ -33,14 +33,29 @@ export default function Home() {
         <Typography component="h1" variant="h2">
           <b>E</b>asy <b>T</b>rainings <b>D</b>ocumentation
         </Typography>
+        <Typography component="h1" variant="subtitle1">
+          The Best Place to Save Your Workouts and Visualize Your Progress!
+        </Typography>
         <NextLink href="/signup" passHref>
           <Button
             type="submit"
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 5, mb: 3 }}
             size="large"
           >
             Sign Up
+          </Button>
+        </NextLink>
+        <NextLink href="/login" passHref>
+          <Button
+            type="submit"
+            // fullWidth
+            variant="outlined"
+            sx={{ mt: 3, mb: 2 }}
+            size="large"
+          // disabled={isSubmitting}
+          >
+            Log In
           </Button>
         </NextLink>
       </Box>
