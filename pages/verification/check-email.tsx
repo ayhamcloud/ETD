@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { Zoom } from "@mui/material";
 import { verify } from "jsonwebtoken";
 import NextLink from "next/link";
-// import { sendEmail } from "../../utils/sendmail";
+import { sendEmail } from "../../utils/sendmail";
 import { useSnackbar } from "notistack";
 
 export default function CheckMail({ user }) {
