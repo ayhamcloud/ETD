@@ -14,7 +14,7 @@ export async function sendEmail(email) {
   });
 
   const mailOptions = {
-    from: "ETD - Easy Trainings Documentation <notifs@ayhamcloud.de>",
+    from: "ETD - Easy Trainings Documentation <etd@ayhamcloud.de>",
     to: email,
     subject: "Verification Successful ✅",
     text: "Your email has been verified",
