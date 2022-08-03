@@ -74,9 +74,9 @@ export async function getLastRelatedSession(ctx, id) {
     threshold: 0.3,
   });
 
-  let lastRelatedSession = sessionFuse.search(currentSession.name).sort((a, b) => (new Date(b.item.date) as any) - (new Date(a.item.date) as any));
+  let lastRelatedSession = sessionFuse.search(currentSession.name).sort((a, b) => (new Date((b as any).item.date) as any) - (new Date((a as any).item.date) as any));
   if (lastRelatedSession.length > 0) {
-    lastRelatedSession = lastRelatedSession[0].item;
+    (lastRelatedSession as any) = lastRelatedSession[0].item;
     return { lastRelatedSession };
   }
   return { lastRelatedSession: null };
