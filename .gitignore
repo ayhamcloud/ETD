@@ -35,3 +35,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+charts/burndown.ipynb
+.gitignore
+charts/*
+
+package-lock.json

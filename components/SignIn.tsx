@@ -61,7 +61,7 @@ export default function SignIn({
           }}
         >
           <Typography component="h1" variant="h5">
-            Sign in
+            Log In
           </Typography>
           <Formik
             initialValues={{ email: "", password: "" }}
@@ -83,7 +83,7 @@ export default function SignIn({
               console.log(data);
               // redirect to dashboard page
               if (data.loggedIn) {
-                router.push(next || "/");
+                router.push(next || "/sessions");
               }
               formikHelpers.setErrors({ Server: data.error } as any);
             }}
@@ -139,7 +139,7 @@ export default function SignIn({
                   sx={{ mt: 3, mb: 2 }}
                   disabled={isSubmitting}
                 >
-                  Sign In
+                  LogIn
                 </Button>
                 <Grid container justifyContent="space-between">
                   <Grid item>

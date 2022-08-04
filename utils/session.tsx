@@ -1,5 +1,5 @@
 import { server } from "../config";
-import Fuse from "fuse";
+import Fuse from "fuse.js";
 
 export function getReps(session) {
   if (!session) return [];
