@@ -1,6 +1,6 @@
-import { PrismaClient, Session } from "@prisma/client";
+import { PrismaClient  } from "@prisma/client";
 import { authenticated } from "../../../../middlewares/auth";
-import { format, isEqual } from "date-fns";
+import { isEqual } from "date-fns";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default authenticated(async function handle(req: NextApiRequest, res: NextApiResponse) {
@@ -15,7 +15,7 @@ export default authenticated(async function handle(req: NextApiRequest, res: Nex
         where: {
           id: { in: toBeDeleted.map((set) => set.id) },
         },
-      });
+      }) as any;
     }
 
     const exercise = await prisma.exercise.upsert({
@@ -64,7 +64,7 @@ export default authenticated(async function handle(req: NextApiRequest, res: Nex
       },
     });
 
-    let created = 0;
+    let created = false;
     created = isEqual(exercise.createdAt, exercise.updatedAt) ? true : false;
 
     await prisma.$disconnect();
