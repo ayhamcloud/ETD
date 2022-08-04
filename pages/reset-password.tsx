@@ -110,7 +110,7 @@ function FormAfterEmail() {
         const data = await res.json();
         if (res.ok && data.updated) {
           enqueueSnackbar("Password Updated", { variant: "success" });
-          router.push("/login", "/login", { shallow: true });
+          router.push("/login", "/login");
         } else {
           enqueueSnackbar(data.error, { variant: "error" });
           formikHelpers.setErrors({ Server: data.error } as any);
