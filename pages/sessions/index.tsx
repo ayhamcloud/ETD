@@ -5,7 +5,7 @@ import WorkoutCard from "../../components/sessions/WorkoutCard";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { NextRequest } from "next";
+import NextRequest from "next";
 
 function SessionsList({ sessions, pages }) {
   const router = useRouter();
