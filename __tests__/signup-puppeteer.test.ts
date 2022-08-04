@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import { PrismaClient } from "@prisma/client";
 
-jest.setTimeout(20000)
+jest.setTimeout(100000)
 
 it('puppeteer home ', async () => {
   const browser = await puppeteer.launch({
@@ -29,6 +29,7 @@ it('puppeteer home ', async () => {
   await page.type('[name="password"]',"#a3456789");
   await page.click('[type="submit"]');
   await page.waitForNavigation();
+  await page.waitForTimeout(1000);
   expect(page.url()).toBe('http://localhost:3000/verification/check-email');
   await browser.close();
 })

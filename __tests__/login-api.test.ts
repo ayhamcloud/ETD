@@ -30,7 +30,7 @@ describe('test login endpoint', () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: "login@gmail.com",
+        email: "login@example.com",
         password: "#a345689"
       })
     });
@@ -47,7 +47,7 @@ describe('test login endpoint', () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: "login@gmail.com",
+        email: "login@example.com",
         password: "#a3456789"
       })
     });
