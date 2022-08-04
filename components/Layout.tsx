@@ -4,7 +4,7 @@ import Footer from "../components/index/Footer";
 import Head from "next/head";
 
 const DefaultSections = [
-  { title: "Dashboard", url: "/dashboard" },
+  { title: "Dashboard", url: "/" },
   { title: "Workouts", url: "/sessions" },
   { title: "Neues Workout", url: "/sessions/new" },
 ];
@@ -21,7 +21,7 @@ export default function Layout({ children, title, sections }) {
         ) : (
           <Header title={title} sections={DefaultSections} />
         )}
-        <main>{children}</main>
+        {children}
       </Container>
       <Footer />
     </>
