@@ -26,7 +26,6 @@ import { Formik, Field, FieldArray, ErrorMessage, Form } from "formik";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AbcIcon from "@mui/icons-material/Abc";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import { useSnackbar } from "notistack";
 import cuid from "cuid";
@@ -36,11 +35,8 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import CustomizedTooltips from "../buttons/Tooltip";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 
-import CustDialog from "../../components/index/custDialog";
-// import CardioForm from "./CardioForm";
-
 const ExpandMore = styled((props) => {
-  const { expand, ...other } = props as any;
+  const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
@@ -63,14 +59,14 @@ const DivForTable = styled("div")({
   alignItems: "center",
 });
 const AddMore = styled((props) => {
-  const { children, ...other } = props as any;
+  const { children, ...other } = props;
   return (
     <Button type="button" {...other}>
       {children}
     </Button>
   );
 })(({ theme }) => ({
-  // marginLeft: "auto",
+  marginLeft: "auto",
   marginRight: theme.spacing(1),
 }));
 
@@ -101,7 +97,7 @@ function ExerciseForm({
   };
   useSWR(
     `/api/sessions/exercises`,
-    async (...args: any) => {
+    async (...args) => {
       const resp = await fetch(...args, {
         method: "POST",
         headers: {
@@ -125,7 +121,7 @@ function ExerciseForm({
   const handleClick = (set, remove, index) => {
     let timer;
     clearTimeout(timer);
-    if (event?.detail === 1) {
+    if (event.detail === 1) {
       timer = setTimeout(() => {
         if (set.toBeDeleted) {
           set.toBeDeleted = false;
@@ -141,7 +137,7 @@ function ExerciseForm({
           remove(index);
         }
       }, 200);
-    } else if (event?.detail === 2) {
+    } else if (event.detail === 2) {
       set.hideSet = true;
       router.push(router.asPath, router.asPath, {
         shallow: true,
@@ -319,7 +315,7 @@ function ExerciseForm({
                                 ),
                               }}
                               placeholder={`${
-                                lastTimeSet[index]?.weight as any || ""
+                                lastTimeSet[index]?.weight || ""
                               }`}
                             />
                           </Grid>
@@ -449,10 +445,6 @@ export default function EditWorkoutCard({
   const [openDeleteSession, setOpenDeleteSession] = useState(false);
   const [toBeDeleted, setToBeDeleted] = useState("");
   const [form, setForm] = useState(() => session.exercises.length === 0);
-  const [cardioForm, setCardioForm] = useState(
-    () => session.exercises.length === 0
-  );
-  const [isDialog, setIsDialog] = useState(false);
   const [fetchAgain, setFetchAgain] = useState(false);
   const [stateSession, setStateSession] = useState(session);
   const [intialValues, setInitialValues] = useState({});
@@ -463,7 +455,7 @@ export default function EditWorkoutCard({
 
   useSWR(
     fetchAgain ? `/api/sessions/${stateSession.id}` : null,
-    async (...args: any) => {
+    async (...args) => {
       const resp = await fetch(...args, {
         method: "POST",
         headers: {
@@ -493,7 +485,7 @@ export default function EditWorkoutCard({
     <Card
       sx={{
         width: "100%",
-        backgroundColor: theme.palette.card?.main,
+        backgroundColor: theme.palette.card.main,
         borderRadius: 5,
       }}
     >
@@ -540,8 +532,8 @@ export default function EditWorkoutCard({
         </IconButton>
         <IconButton
           aria-label="Delete"
-          onClick={(index) => {
-            handleDeleteDialog(stateSession.id, index); 
+          onClick={() => {
+            handleDeleteDialog(stateSession.id);
           }}
         >
           <Delete sx={{ color: "red" }} />
@@ -552,26 +544,16 @@ export default function EditWorkoutCard({
           url={`/api/sessions/delete`}
           id={stateSession.id}
         />
-        <div style={{ flexGrow: 1 }} />
-        <AddMore
-          variant="contained"
-          aria-label="Add Weights"
-          onClick={() => {
-            setForm(true);
-          }}
-        >
-          Add <FitnessCenterIcon />
-        </AddMore>
         <AddMore
           variant="outlined"
-          aria-label="Add Cardio"
+          aria-label="Add"
           onClick={() => {
-            setCardioForm(true);
+            setForm(true);
+            setInitialValues({});
           }}
         >
-          Add <DirectionsRunIcon />
+          Add Exercise
         </AddMore>
-
         <ExpandMore
           expand={expanded}
           onClick={() => setExpanded(!expanded)}
