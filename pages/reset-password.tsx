@@ -13,7 +13,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import { object, string } from "yup";
 import { Alert } from "@mui/material";
 import Head from "next/head";
-import { verify } from "jsonwebtoken";
+import { verify, JwtPayload } from "jsonwebtoken";
 import HourglassFullIcon from "@mui/icons-material/HourglassFull";
 import { useSnackbar } from "notistack";
 
@@ -34,7 +34,7 @@ function FormBeforEmail({ setSent }) {
         });
         const data = await res.json();
         console.log(data);
-        formikHelpers.setErrors({ Server: data.error });
+        formikHelpers.setErrors({ Server: data.error } as any);
         setSent(true);
       }}
     >
@@ -45,7 +45,9 @@ function FormBeforEmail({ setSent }) {
           onReset={handleReset}
           sx={{ mt: 1, width: "100%" }}
         >
-          {errors.Server && <Alert severity="error">{errors.Server}</Alert>}
+          {(errors as any).Server && (
+            <Alert severity="error">{(errors as any).Server}</Alert>
+          )}
           <ErrorMessage name="email">
             {(msg) => <Alert severity="warning">{msg}</Alert>}
           </ErrorMessage>
@@ -83,6 +85,7 @@ function FormBeforEmail({ setSent }) {
 function FormAfterEmail() {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+
   return (
     <Formik
       initialValues={{ password: "" }}
@@ -91,7 +94,7 @@ function FormAfterEmail() {
           .required("Password is required")
           .min(8, "Password must be at least 8 characters long")
           .matches(
-            /(?=.*\d)(?=.*[a-z])(?=.*[~@#$€%^&*+=`|{}:;!.?\"()\[\]-])[\w~@#$€%^&*+=`|{}:;!.?\"()\[\]-]{8,}/,
+            /(?=.*\d)(?=.*[a-zA-Z])(?=.*[~@#$€%^&*+=`|{}:;!.?\"()\[\]-])[\w~@#$€%^&*+=`|{}:;!.?\"()\[\]-]{8,}/,
             "Password must contain at least one lowercase letter and one uppercase letter and one number and a special character"
           ),
       })}
@@ -110,7 +113,7 @@ function FormAfterEmail() {
           router.push("/login", "/login", { shallow: true });
         } else {
           enqueueSnackbar(data.error, { variant: "error" });
-          formikHelpers.setErrors({ Server: data.error });
+          formikHelpers.setErrors({ Server: data.error } as any);
         }
       }}
     >
@@ -121,7 +124,9 @@ function FormAfterEmail() {
           onReset={handleReset}
           sx={{ mt: 1, width: "100%" }}
         >
-          {errors.Server && <Alert severity="error">{errors.Server}</Alert>}
+          {(errors as any).Server && (
+            <Alert severity="error">{(errors as any).Server}</Alert>
+          )}
           <ErrorMessage name="password">
             {(msg) => (
               <Alert
@@ -166,85 +171,84 @@ function FormAfterEmail() {
   );
 }
 
-const check = (
-  <>
-    <Typography component="h1" variant="h5">
-      Check your email
-    </Typography>
-    <Grid container spacing={1} alignItems="center">
-      <Grid item xs={12}>
-        <Box sx={{ textAlign: "center", mt: 3 }}>
-          <HourglassFullIcon
-            fontSize="large"
-            sx={{
-              animation: "spin 3s linear infinite",
-              "@keyframes spin": {
-                from: { transform: "rotate(0deg)" },
-                to: { transform: "rotate(360deg)" },
-              },
-            }}
-          />
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Box>
-          <Typography variant="body1">
-            We sent you an email with a link to reset your password.
-          </Typography>
-          <Typography variant="body1">
-            If you don&apos;t see the email, check your spam folder.
-          </Typography>
-          <Typography variant="body1">
-            If you still don&apos;t see it, click the button below to resend the
-            email.
-          </Typography>
-        </Box>
-      </Grid>
-      <Grid item container xs={12} spacing={1} sx={{ width: "100%" }}>
-        <Grid item xs={12}>
-          <Box sx={{ textAlign: "center" }}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={async () => {
-                const res = await fetch("/api/verification/resend-email", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                });
-                if (res.status === 200) {
-                  enqueueSnackbar("Email sent", {
-                    variant: "success",
-                  });
-                } else {
-                  enqueueSnackbar("Error Email has not been sent!", {
-                    variant: "error",
-                  });
-                }
-              }}
-            >
-              Resend email
-            </Button>
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ textAlign: "center" }}>
-            <NextLink href="/login" passHref>
-              <Button variant="outlined" color="primary">
-                Login
-              </Button>
-            </NextLink>
-          </Box>
-        </Grid>
-      </Grid>
-    </Grid>
-  </>
-);
-
 export default function ResetPassword({ resetpw }) {
   const [sent, setSent] = useState(false);
-
+  const { enqueueSnackbar } = useSnackbar();
+  const check = (
+    <>
+      <Typography component="h1" variant="h5">
+        Check your email
+      </Typography>
+      <Grid container spacing={1} alignItems="center">
+        <Grid item xs={12}>
+          <Box sx={{ textAlign: "center", mt: 3 }}>
+            <HourglassFullIcon
+              fontSize="large"
+              sx={{
+                animation: "spin 3s linear infinite",
+                "@keyframes spin": {
+                  from: { transform: "rotate(0deg)" },
+                  to: { transform: "rotate(360deg)" },
+                },
+              }}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box>
+            <Typography variant="body1">
+              We sent you an email with a link to reset your password.
+            </Typography>
+            <Typography variant="body1">
+              If you don&apos;t see the email, check your spam folder.
+            </Typography>
+            <Typography variant="body1">
+              If you still don&apos;t see it, click the button below to resend
+              the email.
+            </Typography>
+          </Box>
+        </Grid>
+        <Grid item container xs={12} spacing={1} sx={{ width: "100%" }}>
+          <Grid item xs={12}>
+            <Box sx={{ textAlign: "center" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={async () => {
+                  const res = await fetch("/api/verification/resend-email", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  });
+                  if (res.status === 200) {
+                    enqueueSnackbar("Email sent", {
+                      variant: "success",
+                    });
+                  } else {
+                    enqueueSnackbar("Error Email has not been sent!", {
+                      variant: "error",
+                    });
+                  }
+                }}
+              >
+                Resend email
+              </Button>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box sx={{ textAlign: "center" }}>
+              <NextLink href="/login" passHref>
+                <Button variant="outlined" color="primary">
+                  Login
+                </Button>
+              </NextLink>
+            </Box>
+          </Grid>
+        </Grid>
+      </Grid>
+    </>
+  );
   return (
     <>
       <Head>
@@ -328,7 +332,7 @@ export const getServerSideProps = async (ctx) => {
     };
   }
 
-  const decoded = verify(token, process.env.JWT_SECRET);
+  const decoded = verify(token, process.env.JWT_SECRET) as JwtPayload;
   if (!decoded) {
     return {
       redirect: {
