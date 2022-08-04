@@ -33,7 +33,6 @@ import useSWR from "swr";
 import { useRouter } from "next/router";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import CustomizedTooltips from "../buttons/Tooltip";
-import CloudDoneIcon from "@mui/icons-material/CloudDone";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -521,15 +520,6 @@ export default function EditWorkoutCard({
         />
       )}
       <CardActions disableSpacing>
-        <IconButton aria-label="Edit">
-          <NextLink
-            href={`/sessions/edit?id=${stateSession.id}`}
-            as={`/sessions/edit?id=${stateSession.id}`}
-            passHref
-          >
-            <Edit />
-          </NextLink>
-        </IconButton>
         <IconButton
           aria-label="Delete"
           onClick={() => {
