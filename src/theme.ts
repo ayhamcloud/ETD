@@ -16,7 +16,6 @@ const theme = createTheme({
     text: {
       primary: "#3e3e3e",
       secondary: "#1a1a1a",
-      onImage: "#f0f0f0",
     },
     card: {
       main: "#fbfbfb",
@@ -29,6 +28,6 @@ const theme = createTheme({
     backgroundImage: "linear-gradient(to right, #ccc, #333, #ccc)",
     width: "100%",
   },
-});
+} as any);
 
 export default theme;
