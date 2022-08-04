@@ -1,4 +1,4 @@
-import { PrismaClient, Session, Exercise } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { decode, JwtPayload } from "jsonwebtoken";
 import { authenticated } from "../../../../middlewares/auth";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -11,7 +11,8 @@ export default authenticated(async function search(req: NextApiRequest, res: Nex
     res.status(405).send("Method not allowed");
   }
 
-  const uid = decode(req.cookies.token!).userId as JwtPayload;
+  const decoded = decode(req.cookies.token!) as JwtPayload;
+  const uid = decoded.userId;
   const sessionId = req.body.sessionId;
   const name = req.body.name;
   const sessions = await prisma.session.findMany({
