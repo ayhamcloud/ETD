@@ -19,6 +19,7 @@ export default function SignIn({
   noAccountYet,
   next,
   router,
+  dispatch,
 }) {
   return (
     <>
@@ -83,7 +84,8 @@ export default function SignIn({
               console.log(data);
               // redirect to dashboard page
               if (data.loggedIn) {
-                router.push(next || "/sessions");
+                dispatch({ type: "USER_LOGIN", payload: data.name });
+                router.push(next || "/");
               }
               formikHelpers.setErrors({ Server: data.error } as any);
             }}

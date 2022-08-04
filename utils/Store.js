@@ -3,23 +3,23 @@ import { createContext, useReducer } from "react";
 
 const userName = Cookies.get("uname");
 
-export const Store = createContext({state: {userInfo: null}}) as any;
+export const Store = createContext();
 const initialState = {
   userInfo: userName ? userName : null,
 };
 
 function reducer(state, action) {
   switch (action.type) {
-  case "USER_LOGIN":
-    return { ...state, userInfo: action.payload };
-  case "USER_LOGOUT":
-    return {
-      ...state,
-      userInfo: null,
-    };
+    case "USER_LOGIN":
+      return { ...state, userInfo: action.payload };
+    case "USER_LOGOUT":
+      return {
+        ...state,
+        userInfo: null,
+      };
 
-  default:
-    return state;
+    default:
+      return state;
   }
 }
 

@@ -2,10 +2,11 @@ import { PrismaClient, User } from "@prisma/client";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import cookie from "cookie";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
-export default async function login(req, res) {
+export default async function login(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     await prisma.$disconnect();
     res.status(405).send("Method not allowed");

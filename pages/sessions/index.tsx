@@ -5,7 +5,6 @@ import WorkoutCard from "../../components/sessions/WorkoutCard";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import NextRequest from "next";
 
 function SessionsList({ sessions, pages }) {
   const router = useRouter();
@@ -75,9 +74,10 @@ function SessionsList({ sessions, pages }) {
   );
 }
 
-export const getServerSideProps = async (ctx: NextRequest) => {
+export const getServerSideProps = async (ctx: any) => {
   const { page } = ctx.query;
   const skipInt = page === 0 || !page ? 0 : parseInt(page);
+  console.log(server);
 
   const data = await fetch(`${server}/api/sessions?skip=${skipInt}`, {
     headers: {
@@ -92,7 +92,7 @@ export const getServerSideProps = async (ctx: NextRequest) => {
       },
     };
   }
-  if ((data.status === 401 || data.status === 404) && ctx.req) {
+  if (data.status === 401 && ctx.req) {
     return {
       redirect: {
         destination: `/login?next=${ctx.req.url}`,

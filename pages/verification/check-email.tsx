@@ -6,13 +6,21 @@ import Container from "@mui/material/Container";
 import Copyright from "../../src/Copyright";
 import HourglassFullIcon from "@mui/icons-material/HourglassFull";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { Zoom } from "@mui/material";
-import { verify } from "jsonwebtoken";
+import { verify, UserIDJwtPayload } from "jsonwebtoken";
 import NextLink from "next/link";
 import { sendEmail } from "../../utils/sendmail";
 import { useSnackbar } from "notistack";
+
+declare module 'jsonwebtoken' {
+    export interface UserIDJwtPayload extends JwtPayload {
+        userId: string;
+        email: string;
+        pending: boolean;
+    }
+}
 
 export default function CheckMail({ user }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -151,10 +159,9 @@ export default function CheckMail({ user }) {
           justifyContent: "center",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
         }}
       >
-        {check}
+        {loading ? verified : check}
       </Box>
       <Copyright />
     </Container>
@@ -174,7 +181,7 @@ export const getServerSideProps = async (ctx) => {
     };
   }
   if (cookies_token) {
-    const { pending, userId } = verify(cookies_token, process.env.JWT_SECRET || "");
+    const { pending, userId } = verify(cookies_token, process.env.JWT_SECRET || "") as UserIDJwtPayload;
     const user_before = await prisma.user.findUnique({
       where: {
         id: userId,
@@ -199,14 +206,14 @@ export const getServerSideProps = async (ctx) => {
     };
   }
 
-  const decoded = verify(token, process.env.JWT_SECRET || "");
+  const decoded = verify(token, process.env.JWT_SECRET || "") as UserIDJwtPayload;
   const uid = decoded.userId;
 
   const user = await prisma.user.findUnique({
     where: {
       id: uid,
     },
-  });
+  }) as User;
   if (user?.pending === false) {
     return {
       redirect: {
