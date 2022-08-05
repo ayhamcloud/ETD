@@ -13,7 +13,7 @@ const Session = ({ session, chartData }) => {
           <WorkoutCard session={session} defaultExpand={true} modifiable={true} overview={true}/>
         </Grid>
         <Grid item sx={{ width: "100%" }}>
-          <ChartCard data={chartData} title="Wiederholungen" />
+          <ChartCard data={chartData} title="Reps" />
         </Grid>
       </Grid>
     </Layout>
