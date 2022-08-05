@@ -355,7 +355,7 @@ function ExerciseForm({
                               text={`With one click you can highlight the set for deletion Double click to hide the set`}
                             >
                               <IconButton
-                                aria-label="Delete"
+                                aria-label={`DelteSet${index}`}
                                 onClick={() => {
                                   handleClick(set, remove, index);
                                 }}
@@ -376,7 +376,8 @@ function ExerciseForm({
                             }}
                           >
                             <IconButton
-                              aria-label="Add"
+                              id={`AddSet${index}`}
+                              aria-label="AddSet"
                               onClick={() => {
                                 insert(index + 1, emptyValues.sets[0]);
                                 getLastTimeSet(values.name, exercise);
@@ -385,16 +386,6 @@ function ExerciseForm({
                               <AddIcon />
                             </IconButton>
                           </Grid>
-                          {/* <Grid item xs={12}>
-                            <Field
-                              margin="normal"
-                              fullWidth
-                              name={`sets[${index}].createdAt`}
-                              label={`Created at - ${index + 1}`}
-                              type="text"
-                              as={TextField}
-                            />
-                          </Grid> */}
                         </Grid>
                       ))}
                     </Grid>
@@ -402,6 +393,7 @@ function ExerciseForm({
                 </FieldArray>
                 <Grid item xs={6}>
                   <Button
+                    id="Save"
                     fullWidth
                     type="submit"
                     variant="contained"
@@ -521,7 +513,7 @@ export default function EditWorkoutCard({
       )}
       <CardActions disableSpacing>
         <IconButton
-          aria-label="Delete"
+          aria-label="DeleteWorkout"
           onClick={() => {
             handleDeleteDialog(stateSession.id);
           }}
@@ -535,6 +527,7 @@ export default function EditWorkoutCard({
           id={stateSession.id}
         />
         <AddMore
+          id="AddExercise"
           variant="outlined"
           aria-label="Add"
           onClick={() => {
@@ -577,7 +570,7 @@ export default function EditWorkoutCard({
                   }{" "}
                   kg
                   <IconButton
-                    aria-label="Delete"
+                    aria-label="DeleteExercise"
                     onClick={() => handleDeleteDialog(exercise.id, index)}
                     sx={{
                       color: "red",
