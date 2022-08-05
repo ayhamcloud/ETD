@@ -5,7 +5,7 @@ jest.setTimeout(20000)
 describe('test login endpoint', () => {
 
   it('unverified user ', async () => {
-    const response = await nodeFetch('http://localhost:3000/api/users/login', {
+    const response = await nodeFetch('http://0.0.0.0:3000/api/users/login', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ describe('test login endpoint', () => {
   })
 
   it('wrong password ', async () => {
-    const response = await nodeFetch('http://localhost:3000/api/users/login', {
+    const response = await nodeFetch('http://0.0.0.0:3000/api/users/login', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ describe('test login endpoint', () => {
   })
 
   it('verified user ', async () => {
-    const response = await nodeFetch('http://localhost:3000/api/users/login', {
+    const response = await nodeFetch('http://0.0.0.0:3000/api/users/login', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
