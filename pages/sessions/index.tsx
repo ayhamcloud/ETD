@@ -30,14 +30,14 @@ function SessionsList({ sessions, pages }) {
         <Grid container>
           <Grid item sx={{ width: "100%", textAlign: "center", mt: 10 }}>
             <Typography variant="h5" component="h2">
-              Noch keine Workouts vorhanden.
+              No Workouts avaiable.
             </Typography>
           </Grid>
           <Grid item sx={{ width: "100%", textAlign: "center", mt: 10 }}>
             <Typography variant="h5" component="h2">
               <NextLink href="/sessions/new" as="/sessions/new" passHref>
                 <Button variant="contained" color="primary" size="large">
-                  Füge ein Workout hinzu, um fortzufahren.
+                   Click Here To Create A Workout
                 </Button>
               </NextLink>
             </Typography>

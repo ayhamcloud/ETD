@@ -54,7 +54,7 @@ const NewSession = ({ sessions }) => {
   curr.setDate(curr.getDate());
   const date = format(parseISO(curr.toISOString()), "yyyy-MM-dd'T'HH:mm");
   return (
-    <Layout title={`ETD - Neues Workout`} sections={undefined}>
+    <Layout title={`ETD - New Workout`} sections={undefined}>
       <Container component="main" sx={{ mt: 3 }}>
         <Box
           sx={{
@@ -65,7 +65,7 @@ const NewSession = ({ sessions }) => {
           }}
         >
           <Typography component="h1" variant="h5">
-            Neues Workout
+            New Workout
           </Typography>
           <Formik
             initialValues={{
@@ -119,7 +119,7 @@ const NewSession = ({ sessions }) => {
                   color="primary"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? <CircularProgress size={24} /> : "Erstellen"}
+                  {isSubmitting ? <CircularProgress size={24} /> : "Create"}
                 </Button>
               </Box>
             )}
@@ -127,7 +127,7 @@ const NewSession = ({ sessions }) => {
           {lastSession ? (
             <Grid container>
               <Grid item sx={{ width: "100%", mt: 5 }}>
-                <WorkoutCard session={lastSession} defaultExpand={false} modifiable={false}/>
+                <WorkoutCard session={lastSession} defaultExpand={false} modifiable={false} />
               </Grid>
             </Grid>
           ) : (

@@ -6,7 +6,7 @@ import Head from "next/head";
 const DefaultSections = [
   { title: "Dashboard", url: "/" },
   { title: "Workouts", url: "/sessions" },
-  { title: "Neues Workout", url: "/sessions/new" },
+  { title: "Create Workout", url: "/sessions/new" },
 ];
 
 export default function Layout({ children, title, sections }) {
