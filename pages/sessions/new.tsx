@@ -110,7 +110,7 @@ const NewSession = ({ sessions }) => {
                   type="datetime-local"
                   name="session_date"
                   as={TextField}
-                  label="Datum"
+                  label="Date"
                 />
                 <Button
                   fullWidth={true}
