@@ -4,7 +4,6 @@ import Footer from "../components/index/Footer";
 import Head from "next/head";
 
 const DefaultSections = [
-  { title: "Dashboard", url: "/" },
   { title: "Workouts", url: "/sessions" },
   { title: "Create Workout", url: "/sessions/new" },
 ];
